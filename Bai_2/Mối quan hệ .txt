@@ -1,0 +1,3 @@
+Mối quan hệ: 
+ - Books và Author: là mối quan hệ 1-n vì một cuốn sách chỉ có thể viết bởi 1 tác giả nhưng một tác giả có thể viết nhiều cuốn sách.
+ - Book và Publisher: là mối quan hệ 1-n vì một cuốn sách chỉ có thể xuất bản bởi một nhà xuất bản nhưng một nhà xuất bản có thể xuất bản nhiều cuốn sách.
