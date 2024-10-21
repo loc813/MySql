@@ -1,0 +1,3 @@
+Mối quan hệ: 
+ - Student và Enrollment (1-n): một học sinh có thể đăng ký nhiều khóa học khác nhau 
+ - Course và Enrollment (1-n): một khóa học có thể nhiều sinh viên đăng ký 
