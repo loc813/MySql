@@ -1,0 +1,14 @@
+1, Mô tả: 
+ - Customer: Là khách hàng đến để thuê xe. 
+   + Thuộc tính: Mã khách hàng ( một khách hàng khi đi thuê xe sẽ được cấp một mã khách hàng duy nhất), Tên , Địa chị ( địa chị thường trú của khách hàng) , Số điện thoại
+ - Car: Là các dòng xe cho thuê của showroom 
+   + Thuộc tính: Mã xe (mỗi xe có một mã xe để xác định) , Mã Khách hàng , Loại Xe , Giá thuê mỗi ngày ( mỗi một xe sẽ có một giá cho thuê theo ngày khác nhau) 
+ - Rental: Là tiền thuê được tính theo loại xe đó và tổng tiền thuê xe tính theo số ngày thuê. 
+   + Thuộc tính: Mã thuê, Mã khách hàng , Mã xe , Ngày bắt đầu , Ngày kết thúc , Tổng số tiền
+
+2, Cách tính tổng số tiền thuê: 
+	Số ngày thuê = (Ngày kết thúc - Ngày bắt đầu) + 1 ( tính cả ngày bắt đầu thuê) 
+	Tổng số tiền = Số ngày thuê x Giá Thuê Mỗi Ngày 
+Ràng buộc và quy tắc: 
+ - Ngày kết thúc > ngày bắt đầu
+ - Giá thuế > 0
