@@ -1,0 +1,28 @@
+1. Thực thể Event (Sự kiện):
+  EventID: Mã số duy nhất để nhận dạng mỗi sự kiện. Đây là khóa chính của bảng Event.
+  NameEvent: Tên của sự kiện.
+  Location: Địa điểm tổ chức sự kiện.
+  DayBegin: Ngày bắt đầu của sự kiện.
+  Budget: Ngân sách dự kiến cho sự kiện.
+2. Thực thể Attendee (Người tham dự):
+  AttendeeID: Mã số duy nhất để nhận dạng mỗi người tham dự. Đây là khóa chính của bảng Attendee.
+  Name: Tên của người tham dự.
+  Email: Địa chỉ email của người tham dự.
+3. Thực thể Sponsor (Nhà tài trợ):
+  SponsorID: Mã số duy nhất để nhận dạng mỗi nhà tài trợ. Đây là khóa chính của bảng Sponsor.
+  Name: Tên của nhà tài trợ.
+  SponsorshipMoney: Số tiền mà nhà tài trợ đóng góp.
+
+Các bảng liên kết
+ EventAttendee: Bảng này được sử dụng để liên kết giữa thực thể Event và Attendee. Mỗi dòng trong bảng này sẽ đại diện cho một sự kiện mà một người tham dự tham gia.
+
+ EventSponsor: Bảng này được sử dụng để liên kết giữa thực thể Event và Sponsor. Mỗi dòng trong bảng này sẽ đại diện cho một sự kiện được tài trợ bởi một nhà tài trợ.
+Cấu trúc các bảng liên kết
+
+EventAttendee:
+  EventID: Khóa ngoại tham chiếu đến bảng Event, xác định sự kiện.
+  AttendeeID: Khóa ngoại tham chiếu đến bảng Attendee, xác định người tham dự.
+
+EventSponsor:
+  EventID: Khóa ngoại tham chiếu đến bảng Event, xác định sự kiện.
+  SponsorID: Khóa ngoại tham chiếu đến bảng Sponsor, xác định nhà tài trợ.

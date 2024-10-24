@@ -1,0 +1,32 @@
+1. Guest (Khách hàng):
+GuestID: Mã số định danh duy nhất của mỗi khách hàng.
+Name: Tên của khách hàng.
+Address: Địa chỉ của khách hàng.
+Email: Địa chỉ email của khách hàng.
+Mô tả: Thực thể này đại diện cho các cá nhân hoặc tổ chức đặt phòng tại khách sạn.
+
+2. Room (Phòng):
+RoomID: Mã số định danh duy nhất của mỗi phòng.
+Type: Loại phòng (ví dụ: đơn, đôi, suite).
+PricePerNight: Giá thuê phòng cho một đêm.
+Mô tả: Thực thể này đại diện cho các phòng trong khách sạn, bao gồm thông tin về loại phòng và giá cả.
+
+3. Reservation (Đặt phòng):
+ReservationID: Mã số định danh duy nhất của mỗi lần đặt phòng.
+GuestID: Khóa ngoại tham chiếu đến bảng Guest, xác định khách hàng đặt phòng.
+RoomID: Khóa ngoại tham chiếu đến bảng Room, xác định phòng được đặt.
+DateBegin: Ngày bắt đầu thuê phòng.
+DateEnd: Ngày kết thúc thuê phòng.
+Mô tả: Thực thể này đại diện cho một lần đặt phòng cụ thể, bao gồm thông tin về khách hàng, phòng và thời gian thuê.
+
+4. Service (Dịch vụ):
+ServiceID: Mã số định danh duy nhất của mỗi dịch vụ.
+Name: Tên của dịch vụ.
+Price: Giá của dịch vụ.
+Mô tả: Thực thể này đại diện cho các dịch vụ mà khách sạn cung cấp, như dịch vụ phòng, giặt ủi, nhà hàng, v.v.
+
+5. ServiceUsage (Sử dụng dịch vụ):
+ServiceUsageID: Mã số định danh duy nhất của mỗi lần sử dụng dịch vụ.
+ReservationID: Khóa ngoại tham chiếu đến bảng Reservation, xác định đặt phòng liên quan.
+ServiceID: Khóa ngoại tham chiếu đến bảng Service, xác định dịch vụ được sử dụng.
+Mô tả: Thực thể này ghi lại việc khách hàng sử dụng các dịch vụ trong quá trình lưu trú, tạo ra mối liên kết giữa các đặt phòng và các dịch vụ.
