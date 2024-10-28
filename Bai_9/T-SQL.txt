@@ -1,0 +1,81 @@
+1,  Top 3 cửa hàng có doanh thu cao nhất trong quý hiện tại
+WITH CurrentQuarterRevenue AS (
+    SELECT 
+        s.StoreID,
+        st.StoreName,
+        SUM(s.TotalAmount) AS TotalRevenue
+    FROM 
+        Sales s
+    JOIN 
+        Stores st ON s.StoreID = st.StoreID
+    WHERE 
+        QUARTER(s.SaleDate) = QUARTER(CURDATE())
+        AND YEAR(s.SaleDate) = YEAR(CURDATE())
+    GROUP BY 
+        s.StoreID, st.StoreName
+)
+SELECT TOP 3 
+    StoreName,
+    TotalRevenue
+FROM 
+    CurrentQuarterRevenue
+ORDER BY 
+    TotalRevenue DESC;
+
+2, Mức độ đóng góp của mỗi sản phẩm vào tổng doanh thu của cửa hàng có ID là 5 trong năm ngoái
+WITH StoreProductRevenue AS (
+    SELECT 
+        sd.ProductID,
+        SUM(sd.Quantity * sd.UnitPrice) AS ProductRevenue
+    FROM 
+        Sales s
+    JOIN 
+        SalesDetails sd ON s.SaleID = sd.SaleID
+    WHERE 
+        s.StoreID = 5
+        AND YEAR(s.SaleDate) = YEAR(GETDATE()) - 1
+    GROUP BY 
+        sd.ProductID
+),
+TotalStoreRevenue AS (
+    SELECT 
+        SUM(sd.Quantity * sd.UnitPrice) AS TotalRevenue
+    FROM 
+        Sales s
+    JOIN 
+        SalesDetails sd ON s.SaleID = sd.SaleID
+    WHERE 
+        s.StoreID = 5
+        AND YEAR(s.SaleDate) = YEAR(GETDATE()) - 1
+)
+SELECT 
+    p.ProductID,
+    p.ProductName,
+    (spr.ProductRevenue / tsr.TotalRevenue) * 100 AS ContributionPercentage
+FROM 
+    StoreProductRevenue spr
+CROSS JOIN 
+    TotalStoreRevenue tsr
+JOIN 
+    Products p ON spr.ProductID = p.ProductID
+ORDER BY 
+    ContributionPercentage DESC;
+
+3, Danh sách khách hàng có số lượng đơn hàng và tổng chi tiêu cao nhất trong năm 2024. Sắp xếp kết quả theo tổng chi tiêu giảm dần và chỉ chọn các khách hàng có tổng chi tiêu lớn hơn 10,000.
+SELECT 
+    c.CustomerID,
+    c.CustomerName,
+    COUNT(s.SaleID) AS OrderCount,
+    SUM(s.TotalAmount) AS TotalSpent
+FROM 
+    Sales s
+JOIN 
+    Customers c ON s.CustomerID = c.CustomerID
+WHERE 
+    YEAR(s.SaleDate) = 2024
+GROUP BY 
+    c.CustomerID, c.CustomerName
+HAVING 
+    SUM(s.TotalAmount) > 10000
+ORDER BY 
+    TotalSpent DESC;
