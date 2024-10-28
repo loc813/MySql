@@ -1,0 +1,34 @@
+1, Project (Dự án):
+
+- ProjectID: Mã định danh duy nhất của dự án.
+- Name: Tên của dự án.
+- DayBegin: Ngày bắt đầu dự án.
+- DayEnd: Ngày kết thúc dự án.
+- Budget: Ngân sách của dự án.
+=> Project đại diện cho một dự án trong hệ thống. Dự án có thông tin cơ bản bao gồm mã dự án, tên, ngày bắt đầu và kết thúc, và ngân sách.
+
+2, Employee (Nhân viên):
+
+- EmployeeID: Mã định danh duy nhất của nhân viên.
+- Name: Tên của nhân viên.
+- JobTitle: Chức vụ của nhân viên.
+=> Employee đại diện cho một nhân viên tham gia vào các dự án trong hệ thống. Mỗi nhân viên có mã định danh, tên và chức vụ.
+
+3, Assignment (Phân công):
+
+- AssignmentID: Mã định danh duy nhất của phân công.
+- EmployeeID: Mã của nhân viên tham gia vào phân công (liên kết với Employee).
+- ProjectID: Mã của dự án mà nhân viên được phân công (liên kết với Project).
+- DayBegin: Ngày bắt đầu phân công.
+- DayEnd: Ngày kết thúc phân công.
+=> Assignment là bảng liên kết giữa Employee và Project, đại diện cho mối quan hệ nhiều-nhiều giữa dự án và nhân viên. Nó lưu trữ thông tin về việc nhân viên nào được phân công vào dự án nào, cùng với thời gian bắt đầu và kết thúc của phân công đó.
+
+4, Task (Nhiệm vụ):
+
+- TaskID: Mã định danh duy nhất của nhiệm vụ.
+- Name: Tên của nhiệm vụ.
+- ProjectID: Mã của dự án mà nhiệm vụ thuộc về (liên kết với Project).
+- DayBegin: Ngày bắt đầu nhiệm vụ.
+- DayEnd: Ngày kết thúc nhiệm vụ.
+- Status: Trạng thái của nhiệm vụ (ví dụ: Chưa bắt đầu, Đang thực hiện, Hoàn thành).
+=> Task đại diện cho các nhiệm vụ trong dự án. Mỗi nhiệm vụ thuộc về một dự án và có mã định danh riêng, tên, ngày bắt đầu và kết thúc, cùng trạng thái hiện tại.
