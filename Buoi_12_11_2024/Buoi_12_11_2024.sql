@@ -117,5 +117,90 @@ and wk.id not in (
     join building b on b.id = w.building_id
     where b.city like 'vinh long');
 
-select c.name from contractor c 
-join 
+select c.name as contractor_name
+from contractor c
+inner join building b on c.id = b.contractor_id
+where b.cost > (select sum(cost) from building b where contractor_id = (select id from
+ contractor where name = 'Phòng Dịch vụ Sở Xây Dựng'))
+group by c.name;
+
+select a.name from architect a 
+inner join design d on d.architect_id = a.id
+where d.benefit < (select avg(benefit) from design)
+group by a.name;
+
+select c.name , c.address from contractor c
+inner join building b on b.contractor_id = c.id 
+where b.cost = (select min(cost) from building );
+
+select wk.name , wk.skill from worker wk 
+inner join work w on w.worker_id = wk.id
+inner join building b on b.id = w.building_id
+inner join design d on d.building_id = b.id
+inner join architect a on d.architect_id = a.id
+where a.name = 'le thanh tung';
+
+select c1.name from contractor c1;
+
+select c.name , sum(b.cost) from building b
+inner join contractor c on c.id = b.contractor_id
+group by c.name;
+
+select a.name , sum(d.benefit) from architect a 
+inner join design d on d.architect_id = a.id
+group by a.name 
+having sum(d.benefit) > 25;
+
+select b.name , count(wk.id) as totalWorker from building b 
+inner join work w on w.building_id = b.id
+inner join worker wk on wk.id = w.worker_id
+group by b.name;
+
+-- select b.name , b.address, count(wk.id) as total_workers
+-- from building b
+-- inner join work w on w.building_id = b.id
+-- inner join worker wk on wk.id = w.worker_id
+-- group by b.id , b.name, w.worker_id  -- Add w.worker_id here
+-- order by count(wk.id) desc
+-- limit 1;
+
+select b.name, b.address, 
+(select count(*) from work w2 where w2.building_id = b.id) as total_workers
+from building b
+group by b.id, b.name
+order by total_workers desc
+limit 1;
+
+select b.city , avg(b.cost) from building b 
+group by b.city 
+order by avg(b.cost) desc;
+
+-- select wk.name from worker wk
+-- inner join work w on w.worker_id = wk.id
+-- inner join building b on b.id = w.building_id
+-- where sum(datediff(b.start, w.date)) > (
+-- 	select wk.id from worker wk
+-- 	inner join work w on w.worker_id = wk.id
+-- 	inner join building b on b.id = w.building_id
+--     where wk.name = 'nguyen hong van'
+-- );
+
+select c.name , b.city , count(b.id) from building b 
+inner join contractor c on c.id = b.contractor_id
+group by b.city , c.name
+order by count(b.id) desc;
+
+SELECT wk.name
+FROM worker wk
+INNER JOIN work w ON w.worker_id = wk.id
+INNER JOIN building b ON b.id = w.building_id
+WHERE NOT EXISTS (
+  SELECT *
+  FROM building b2
+  WHERE NOT EXISTS (
+    SELECT *
+    FROM work w2
+    WHERE w2.worker_id = wk.id
+    AND w2.building_id = b2.id
+  )
+);
