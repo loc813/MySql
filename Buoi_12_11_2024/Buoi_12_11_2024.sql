@@ -204,3 +204,65 @@ WHERE NOT EXISTS (
     AND w2.building_id = b2.id
   )
 );
+
+
+-- exe5 --
+CREATE TABLE employee (
+    employee_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    age INT,
+    salary DECIMAL(10,2)
+);
+
+CREATE TABLE department (
+    department_id INT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+CREATE TABLE employee_department (
+    employee_id INT,
+    department_id INT,
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
+    FOREIGN KEY (department_id) REFERENCES department(department_id)
+);
+
+
+SELECT e.employee_id, e.name
+FROM employee e
+INNER JOIN employee_department ed ON e.employee_id = ed.employee_id
+INNER JOIN department d ON ed.department_id = d.department_id
+WHERE d.name = 'Kế toán';
+
+SELECT employee_id, name, salary
+FROM employee
+WHERE salary > 50000;
+
+SELECT d.name, COUNT(*) AS total_employees
+FROM department d
+INNER JOIN employee_department ed ON d.department_id = ed.department_id
+GROUP BY d.name;
+
+SELECT d.name, e.name, e.salary
+FROM employee e
+INNER JOIN employee_department ed ON e.employee_id = ed.employee_id
+INNER JOIN department d ON ed.department_id = d.department_id
+WHERE (d.name, e.salary) IN (
+    SELECT d.name, MAX(e.salary)
+    FROM employee e
+    INNER JOIN employee_department ed ON e.employee_id = ed.employee_id
+    INNER JOIN department d ON ed.department_id = d.department_id
+    GROUP BY d.name
+);
+
+SELECT d.name, SUM(e.salary) AS total_salary
+FROM department d
+INNER JOIN employee_department ed ON d.department_id = ed.department_id
+INNER JOIN employee e ON ed.employee_id = e.employee_id
+GROUP BY d.name
+HAVING SUM(e.salary) > 100000;
+
+SELECT e.employee_id, e.name, COUNT(ed.department_id) AS num_departments
+FROM employee e
+INNER JOIN employee_department ed ON e.employee_id = ed.employee_id
+GROUP BY e.employee_id, e.name
+HAVING COUNT(ed.department_id) > 2;
