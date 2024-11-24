@@ -136,7 +136,81 @@ create index productNameIndex on products(productName);
 
 show index from  productNameIndex;
 
-drop index productNameIndex;
+drop index productNameIndex on products;
 
 
+delimiter $$ 
+create procedure getProductByPrice(in priceInput int)
+begin 
+	select productName , productId , price from products
+    where price > priceInput;
+end $$
+delimiter $$
 
+call getProductByPrice(500000);
+
+delimiter $$ 
+create procedure getOrderDetails(in orderId int)
+begin 
+	select * from order_details od
+    inner join orders o on o.orderId = od.orderId
+    where o.orderId = od.orderId;
+end $$ 
+delimiter $$
+
+call getOrderDetails(4);
+
+drop procedure if exists getOrderDetails;
+
+delimiter $$ 
+create procedure addNewProduct(in productName varchar(100) , in price int ,in description varchar(200), in quantity int)
+begin 
+	insert into products(productName , price , description, quantity)
+    values(productName, price , description, quantity);
+end $$ 
+delimiter $$ 
+
+call addNewProduct('Roll Royces', 1000000000 , 'sieu xe dat gia bac nhat the gioi', 10);
+
+delimiter $$
+create procedure deleteProductById(in product_Id int)
+begin 
+	delete from products where productId = product_Id;
+end $$ 
+delimiter $$ 
+
+call deleteProductById(1);
+
+delimiter $$
+create procedure searchProductByName (in Product_Name varchar(200))
+begin 
+	select * from products 
+    where productName = product_Name;
+end $$
+delimiter $$
+
+call searchProductByName('Chuột không dây 2.4ghz 1600 Dpi hình xe hơi độc đáo đẹp mắt');
+
+delimiter $$
+create procedure filterProductsByPriceRange(in minPrice int , in maxPrice int)
+begin 
+	select * from Products
+    where price between minPrice and maxPrice;
+end $$
+delimiter $$
+
+call filterProductsByPriceRange( 10000, 200000);
+
+delimiter $$
+create procedure paginateProducts(in pageNumber int, in pageSize int)
+begin 
+	declare offset INT;
+    
+    set offset = (pageNumber - 1) * pageSize;
+    
+    select * from products 
+    limit pageSize OFFSET offset;
+end $$
+delimiter $$
+
+call paginateProducts(4, 5);
