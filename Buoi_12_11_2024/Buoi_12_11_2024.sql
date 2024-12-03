@@ -266,3 +266,5 @@ FROM employee e
 INNER JOIN employee_department ed ON e.employee_id = ed.employee_id
 GROUP BY e.employee_id, e.name
 HAVING COUNT(ed.department_id) > 2;
+
+create view not_retired on 
